@@ -1,6 +1,25 @@
 import sqlite3
+import sys
 conn=sqlite3.connect('im.db')
 cur=conn.cursor()
+def login() :
+	while True:
+		user_name = raw_input('enter the Username  :')
+		passw = raw_input('enter the password   :')
+		sql = ("SELECT * from login where user_name = ? AND password = ?")
+		cur.execute(sql,[(user_name),(passw)])
+		r = cur.fetchall()
+		if r:
+			for i in r:
+				print "\n"
+				print ("--------------Admin logged in--------------- ")
+			break
+		else:
+			print "Invalid Username Password"
+			a = raw_input("Do u want to try again (y/n)?")
+			if a.lower() == "n":
+				print "------------thankyou bye !----------------"
+				sys.exit()
 def add() :
 	print(' ')
 	print('======================================================================')
@@ -168,8 +187,16 @@ def main() :
 		m='n'
 		print(' ')
 		print('--------------------------------------------------------------------')
-		a=input('1: Billing          2: Stock Management    :   ')
 		print(' ')
+		print('Login')
+		print('-----')
+		login()
+		print(' ')
+		print('--------------------------------------------------------------------')
+		print('				MAIN MENU 				')
+		print('--------------------------------------------------------------------')
+		a=input('	  1: Billing          2: Stock Management    :   ')
+		print(' ') 
 		print('--------------------------------------------------------------------')
 		if a==1 :
 			list()
